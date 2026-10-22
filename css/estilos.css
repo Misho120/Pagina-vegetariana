@@ -1,0 +1,653 @@
+
+/* ========================================
+   V-KOMBU - RECETARIO VEGETAL
+   HOJA DE ESTILOS PRINCIPAL
+======================================== */
+
+/* 1. COLORES Y CONFIGURACIÓN GENERAL */
+
+:root {
+    --verde-oscuro: #263f32;
+    --verde-principal: #426b4c;
+    --verde-claro: #e7eddf;
+    --crema: #f8f6ef;
+    --blanco: #ffffff;
+    --dorado: #b9a36b;
+    --texto: #333b34;
+    --texto-suave: #72796f;
+    --borde: #e1e4d9;
+    --sombra: 0 8px 25px rgba(38, 63, 50, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--crema);
+    color: var(--texto);
+    line-height: 1.6;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--dorado);
+    outline-offset: 3px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.texto-oculto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+/* 2. ENCABEZADO */
+
+.encabezado {
+    min-height: 82px;
+    padding: 18px 7%;
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+}
+
+.logo {
+    color: var(--blanco);
+    font-size: 29px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.navegacion {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.navegacion a {
+    font-size: 14px;
+    color: #edf0e9;
+    transition: color 0.2s ease;
+}
+
+.navegacion a:hover {
+    color: #d9c58e;
+}
+
+.boton-explorar {
+    background-color: var(--dorado);
+    color: var(--verde-oscuro);
+    border-radius: 5px;
+    padding: 11px 19px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.boton-explorar:hover {
+    background-color: #d1bd87;
+}
+
+
+/* 3. PRESENTACIÓN Y BUSCADOR */
+
+.presentacion {
+    padding: 90px 20px 75px;
+    text-align: center;
+    background:
+        radial-gradient(
+            ellipse at top,
+            #e8eddf 0%,
+            var(--crema) 72%
+        );
+}
+
+.etiqueta {
+    color: var(--verde-principal);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+}
+
+.presentacion h1 {
+    color: var(--verde-oscuro);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: normal;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.descripcion {
+    max-width: 610px;
+    margin: 0 auto 32px;
+    color: var(--texto-suave);
+    font-size: 16px;
+}
+
+.buscador {
+    display: flex;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 7px;
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 7px;
+    box-shadow: var(--sombra);
+}
+
+.buscador input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 13px 16px;
+    color: var(--texto);
+}
+
+.buscador input:focus-visible {
+    outline: 2px solid var(--verde-principal);
+    outline-offset: -2px;
+}
+
+.buscador button {
+    border: none;
+    border-radius: 5px;
+    padding: 12px 25px;
+    background-color: var(--verde-principal);
+    color: var(--blanco);
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.buscador button:hover {
+    background-color: var(--verde-oscuro);
+}
+
+
+/* 4. CATEGORÍAS */
+
+.categorias {
+    padding: 55px 7% 65px;
+    text-align: center;
+}
+
+.titulo-seccion h2,
+.encabezado-recetas h2,
+.sobre-nosotros h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(27px, 3vw, 36px);
+    font-weight: normal;
+    color: var(--verde-oscuro);
+}
+
+.lista-categorias {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.categoria {
+    border: 1px solid #d9dfd2;
+    background-color: var(--blanco);
+    color: var(--verde-oscuro);
+    padding: 10px 19px;
+    border-radius: 30px;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.categoria:hover,
+.categoria.activa {
+    background-color: var(--verde-principal);
+    border-color: var(--verde-principal);
+    color: var(--blanco);
+}
+
+
+/* 5. SECCIÓN DE RECETAS */
+
+.seccion-recetas {
+    padding: 65px 7% 90px;
+    background-color: #f0f1e9;
+}
+
+.encabezado-recetas {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.encabezado-recetas .etiqueta {
+    margin-bottom: 8px;
+}
+
+#contador-recetas {
+    color: var(--texto-suave);
+    font-size: 13px;
+}
+
+
+/* 6. DISTRIBUCIÓN DE FILTROS Y TARJETAS */
+
+.contenido-recetas {
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
+    gap: 30px;
+    align-items: start;
+}
+
+.filtros {
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 25px 21px;
+}
+
+.filtros h3 {
+    color: var(--verde-oscuro);
+    font-size: 18px;
+    margin-bottom: 22px;
+}
+
+.filtros fieldset {
+    border: none;
+    border-top: 1px solid var(--borde);
+    padding: 19px 0;
+}
+
+.filtros legend {
+    padding-top: 17px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--verde-oscuro);
+}
+
+.filtros label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0;
+    color: var(--texto-suave);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.filtros input {
+    accent-color: var(--verde-principal);
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+#limpiar-filtros {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--verde-principal);
+    border-radius: 5px;
+    background-color: transparent;
+    color: var(--verde-principal);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#limpiar-filtros:hover {
+    background-color: var(--verde-claro);
+}
+
+
+/* 7. CUADRÍCULA DE RECETAS */
+
+.cuadricula-recetas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.tarjeta-receta {
+    min-width: 0;
+    overflow: hidden;
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    box-shadow: 0 3px 12px rgba(38, 63, 50, 0.04);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.tarjeta-receta:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra);
+}
+
+.tarjeta-receta img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    background-color: var(--verde-claro);
+}
+
+.informacion-receta {
+    padding: 20px;
+}
+
+.etiqueta-receta {
+    display: inline-block;
+    color: var(--verde-principal);
+    background-color: var(--verde-claro);
+    padding: 5px 9px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.informacion-receta h3 {
+    color: var(--verde-oscuro);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 20px;
+    line-height: 1.35;
+    margin-bottom: 10px;
+}
+
+.informacion-receta p {
+    color: var(--texto-suave);
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.detalles-receta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 13px;
+    border-top: 1px solid var(--borde);
+    color: var(--verde-principal);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#sin-resultados {
+    grid-column: 1 / -1;
+    padding: 30px;
+    text-align: center;
+    color: var(--texto-suave);
+    background-color: var(--blanco);
+    border-radius: 8px;
+}
+
+
+/* 8. SOBRE NOSOTROS */
+
+.sobre-nosotros {
+    padding: 85px 20px;
+    text-align: center;
+    background-color: var(--crema);
+}
+
+.sobre-nosotros h2 {
+    margin-bottom: 20px;
+}
+
+.sobre-nosotros > p:last-child {
+    max-width: 650px;
+    margin: 0 auto;
+    color: var(--texto-suave);
+    font-size: 15px;
+}
+
+
+/* 9. PIE DE PÁGINA */
+
+.pie-pagina {
+    padding: 45px 7% 20px;
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
+}
+
+.pie-contenido {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 35px;
+    padding-bottom: 35px;
+}
+
+.pie-contenido > div:first-child {
+    max-width: 350px;
+}
+
+.pie-contenido p {
+    margin-top: 12px;
+    color: #d3dbd2;
+    font-size: 13px;
+}
+
+.enlaces-pie {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+.enlaces-pie a {
+    color: #e4e9e0;
+    font-size: 13px;
+}
+
+.enlaces-pie a:hover {
+    color: #d9c58e;
+}
+
+.copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    padding-top: 18px;
+    text-align: center;
+    color: #d3dbd2;
+    font-size: 12px;
+}
+
+
+/* 10. ADAPTACIÓN A TABLETAS */
+
+@media (max-width: 1000px) {
+    .encabezado {
+        padding-left: 4%;
+        padding-right: 4%;
+        gap: 18px;
+    }
+
+    .navegacion {
+        gap: 18px;
+    }
+
+    .seccion-recetas,
+    .categorias {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    .contenido-recetas {
+        grid-template-columns: 215px minmax(0, 1fr);
+        gap: 20px;
+    }
+
+    .cuadricula-recetas {
+        gap: 16px;
+    }
+
+    .informacion-receta {
+        padding: 15px;
+    }
+}
+
+
+/* 11. ADAPTACIÓN A CELULARES */
+
+@media (max-width: 700px) {
+    .encabezado {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 17px 5%;
+    }
+
+    .logo {
+        font-size: 25px;
+    }
+
+    .navegacion {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .boton-explorar {
+        padding: 9px 12px;
+        font-size: 12px;
+    }
+
+    .presentacion {
+        padding: 65px 20px 55px;
+    }
+
+    .descripcion {
+        font-size: 14px;
+    }
+
+    .buscador {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .buscador input {
+        width: 100%;
+    }
+
+    .buscador button {
+        width: 100%;
+    }
+
+    .categorias {
+        padding-top: 45px;
+        padding-bottom: 45px;
+    }
+
+    .lista-categorias {
+        gap: 9px;
+    }
+
+    .categoria {
+        padding: 9px 13px;
+        font-size: 12px;
+    }
+
+    .seccion-recetas {
+        padding: 50px 5%;
+    }
+
+    .encabezado-recetas {
+        align-items: start;
+        flex-direction: column;
+        margin-bottom: 25px;
+    }
+
+    .contenido-recetas {
+        grid-template-columns: 1fr;
+    }
+
+    .filtros {
+        padding: 20px;
+    }
+
+    .cuadricula-recetas {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .tarjeta-receta img {
+        aspect-ratio: 16 / 10;
+    }
+
+    .informacion-receta {
+        padding: 20px;
+    }
+
+    .sobre-nosotros {
+        padding: 60px 22px;
+    }
+
+    .pie-contenido {
+        flex-direction: column;
+    }
+
+    .enlaces-pie {
+        gap: 15px;
+    }
+}
+
+
+/* 12. REDUCIR ANIMACIONES SI EL USUARIO LO PREFIERE */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

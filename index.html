@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Descubre recetas vegetarianas, explora ingredientes y encuentra inspiración para cocinar de forma saludable.">
+
+    <title>V-Kombu | Recetario Vegetal</title>
+
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+
+        <a href="#" class="logo" aria-label="V-Kombu, página principal">
+            V-Kombu
+        </a>
+
+        <nav class="navegacion" aria-label="Navegación principal">
+            <a href="#recetas">Recetas</a>
+            <a href="#categorias">Categorías</a>
+            <a href="#nosotros">Sobre nosotros</a>
+        </nav>
+
+        <a href="#recetas" class="boton-explorar">
+            Explorar recetas
+        </a>
+
+    </header>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+
+        <!-- PRESENTACIÓN Y BUSCADOR -->
+        <section class="presentacion">
+
+            <p class="etiqueta">COCINA VEGETAL PARA TODOS</p>
+
+            <h1>Explora el recetario</h1>
+
+            <p class="descripcion">
+                Encuentra inspiración para cocinar con ingredientes
+                vegetales, descubrir nuevos sabores y disfrutar cada comida.
+            </p>
+
+            <form class="buscador" id="formulario-busqueda" role="search">
+
+                <label for="buscar-receta" class="texto-oculto">
+                    Buscar recetas
+                </label>
+
+                <input
+                    type="search"
+                    id="buscar-receta"
+                    name="busqueda"
+                    placeholder="Busca por ingrediente, plato o técnica..."
+                >
+
+                <button type="submit">
+                    Buscar
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- CATEGORÍAS -->
+        <section class="categorias" id="categorias">
+
+            <div class="titulo-seccion">
+                <p class="etiqueta">ENCUENTRA TU INSPIRACIÓN</p>
+                <h2>¿Qué se te antoja hoy?</h2>
+            </div>
+
+            <div class="lista-categorias">
+
+                <button type="button" class="categoria" data-categoria="todas">
+                    Todas las recetas
+                </button>
+
+                <button type="button" class="categoria" data-categoria="desayuno">
+                    Desayunos
+                </button>
+
+                <button type="button" class="categoria" data-categoria="comida">
+                    Comidas
+                </button>
+
+                <button type="button" class="categoria" data-categoria="cena">
+                    Cenas
+                </button>
+
+                <button type="button" class="categoria" data-categoria="postre">
+                    Postres
+                </button>
+
+                <button type="button" class="categoria" data-categoria="bebida">
+                    Bebidas
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECETAS Y FILTROS -->
+        <section class="seccion-recetas" id="recetas">
+
+            <div class="encabezado-recetas">
+
+                <div>
+                    <p class="etiqueta">NUEVAS IDEAS PARA TU COCINA</p>
+                    <h2>Descubre nuestras recetas</h2>
+                </div>
+
+                <p id="contador-recetas" aria-live="polite">
+                    6 recetas
+                </p>
+
+            </div>
+
+
+            <div class="contenido-recetas">
+
+                <!-- PANEL DE FILTROS -->
+                <aside class="filtros" aria-label="Filtros de recetas">
+
+                    <h3>Filtrar recetas</h3>
+
+                    <!-- FILTRO POR TIEMPO -->
+                    <fieldset>
+
+                        <legend>Tiempo de preparación</legend>
+
+                        <label>
+                            <input type="radio" name="tiempo" value="todos" checked>
+                            Cualquier duración
+                        </label>
+
+                        <label>
+                            <input type="radio" name="tiempo" value="15">
+                            15 minutos o menos
+                        </label>
+
+                        <label>
+                            <input type="radio" name="tiempo" value="30">
+                            30 minutos o menos
+                        </label>
+
+                    </fieldset>
+
+
+                    <!-- FILTRO POR TIPO DE PLATO -->
+                    <fieldset>
+
+                        <legend>Tipo de plato</legend>
+
+                        <label>
+                            <input type="checkbox" name="tipo" value="desayuno">
+                            Desayuno
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="tipo" value="comida">
+                            Comida
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="tipo" value="cena">
+                            Cena
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="tipo" value="postre">
+                            Postre
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="tipo" value="bebida">
+                            Bebida
+                        </label>
+
+                    </fieldset>
+
+
+                    <!-- FILTRO POR ALIMENTACIÓN -->
+                    <fieldset>
+
+                        <legend>Preferencias alimentarias</legend>
+
+                        <label>
+                            <input type="checkbox" name="alimentacion" value="vegana">
+                            Vegana
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="alimentacion" value="vegetariana">
+                            Vegetariana
+                        </label>
+
+                    </fieldset>
+
+
+                    <button type="button" id="limpiar-filtros">
+                        Limpiar filtros
+                    </button>
+
+                </aside>
+
+
+                <!-- CUADRÍCULA DE RECETAS -->
+                <div class="cuadricula-recetas" id="lista-recetas">
+
+
+                    <!-- RECETA 1 -->
+                    <article
+                        class="tarjeta-receta"
+                        data-nombre="ensalada fresca de aguacate"
+                        data-ingredientes="aguacate lechuga tomate pepino limón"
+                        data-categoria="comida"
+                        data-tiempo="15"
+                        data-alimentacion="vegana vegetariana"
+                    >
+
+                        <img
+                            src="https://placehold.co/600x400/E5EBDD/31543D?text=Ensalada+fresca"
+                            alt="Imagen ilustrativa de una ensalada fresca de aguacate"
+                            loading="lazy"
+                        >
+
+                        <div class="informacion-receta">
+
+                            <span class="etiqueta-receta">VEGANA</span>
+
+                            <h3>Ensalada fresca de aguacate</h3>
+
+                            <p>
+                                Una combinación fresca de vegetales,
+                                aguacate y limón.
+                            </p>
+
+                            <div class="detalles-receta">
+                                <span>15 min</span>
+                                <span>Fácil</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- RECETA 2 -->
+                    <article
+                        class="tarjeta-receta"
+                        data-nombre="tostadas de aguacate"
+                        data-ingredientes="pan aguacate tomate limón"
+                        data-categoria="desayuno"
+                        data-tiempo="10"
+                        data-alimentacion="vegana vegetariana"
+                    >
+
+                        <img
+                            src="https://placehold.co/600x400/F2E6CE/715538?text=Tostadas+de+aguacate"
+                            alt="Imagen ilustrativa de tostadas con aguacate"
+                            loading="lazy"
+                        >
+
+                        <div class="informacion-receta">
+
+                            <span class="etiqueta-receta">VEGANA</span>
+
+                            <h3>Tostadas de aguacate</h3>
+
+                            <p>
+                                Pan tostado acompañado de aguacate
+                                y vegetales frescos.
+                            </p>
+
+                            <div class="detalles-receta">
+                                <span>10 min</span>
+                                <span>Fácil</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- RECETA 3 -->
+                    <article
+                        class="tarjeta-receta"
+                        data-nombre="pasta con tomate y albahaca"
+                        data-ingredientes="pasta tomate albahaca ajo aceite de oliva"
+                        data-categoria="comida"
+                        data-tiempo="25"
+                        data-alimentacion="vegana vegetariana"
+                    >
+
+                        <img
+                            src="https://placehold.co/600x400/F1DCD0/7B4938?text=Pasta+con+tomate"
+                            alt="Imagen ilustrativa de pasta con tomate y albahaca"
+                            loading="lazy"
+                        >
+
+                        <div class="informacion-receta">
+
+                            <span class="etiqueta-receta">VEGANA</span>
+
+                            <h3>Pasta con tomate y albahaca</h3>
+
+                            <p>
+                                Pasta acompañada de tomate,
+                                ajo y albahaca fresca.
+                            </p>
+
+                            <div class="detalles-receta">
+                                <span>25 min</span>
+                                <span>Fácil</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- RECETA 4 -->
+                    <article
+                        class="tarjeta-receta"
+                        data-nombre="bowl de arroz y verduras"
+                        data-ingredientes="arroz zanahoria brócoli pepino ajonjolí"
+                        data-categoria="comida"
+                        data-tiempo="30"
+                        data-alimentacion="vegana vegetariana"
+                    >
+
+                        <img
+                            src="https://placehold.co/600x400/E3E8D5/496341?text=Bowl+de+verduras"
+                            alt="Imagen ilustrativa de un bowl de arroz con verduras"
+                            loading="lazy"
+                        >
+
+                        <div class="informacion-receta">
+
+                            <span class="etiqueta-receta">VEGANA</span>
+
+                            <h3>Bowl de arroz y verduras</h3>
+
+                            <p>
+                                Arroz acompañado de verduras
+                                frescas y una mezcla de sabores.
+                            </p>
+
+                            <div class="detalles-receta">
+                                <span>30 min</span>
+                                <span>Fácil</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- RECETA 5 -->
+                    <article
+                        class="tarjeta-receta"
+                        data-nombre="hotcakes de plátano"
+                        data-ingredientes="plátano avena leche vegetal canela"
+                        data-categoria="desayuno"
+                        data-tiempo="15"
+                        data-alimentacion="vegana vegetariana"
+                    >
+
+                        <img
+                            src="https://placehold.co/600x400/F0E2C8/795A3B?text=Hotcakes+de+pl%C3%A1tano"
+                            alt="Imagen ilustrativa de hotcakes de plátano"
+                            loading="lazy"
+                        >
+
+                        <div class="informacion-receta">
+
+                            <span class="etiqueta-receta">VEGANA</span>
+
+                            <h3>Hotcakes de plátano</h3>
+
+                            <p>
+                                Una opción dulce para comenzar
+                                el día con energía.
+                            </p>
+
+                            <div class="detalles-receta">
+                                <span>15 min</span>
+                                <span>Fácil</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- RECETA 6 -->
+                    <article
+                        class="tarjeta-receta"
+                        data-nombre="agua fresca de pepino y limón"
+                        data-ingredientes="pepino limón agua hierbabuena"
+                        data-categoria="bebida"
+                        data-tiempo="10"
+                        data-alimentacion="vegana vegetariana"
+                    >
+
+                        <img
+                            src="https://placehold.co/600x400/DCECE1/3F7255?text=Agua+de+pepino"
+                            alt="Imagen ilustrativa de agua fresca de pepino y limón"
+                            loading="lazy"
+                        >
+
+                        <div class="informacion-receta">
+
+                            <span class="etiqueta-receta">VEGANA</span>
+
+                            <h3>Agua de pepino y limón</h3>
+
+                            <p>
+                                Una bebida refrescante con pepino,
+                                limón y hierbabuena.
+                            </p>
+
+                            <div class="detalles-receta">
+                                <span>10 min</span>
+                                <span>Fácil</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- MENSAJE CUANDO NO HAY RESULTADOS -->
+                    <p id="sin-resultados" hidden>
+                        No encontramos recetas con esos criterios.
+                        Prueba con otros filtros.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SOBRE NOSOTROS -->
+        <section class="sobre-nosotros" id="nosotros">
+
+            <p class="etiqueta">NUESTRA FILOSOFÍA</p>
+
+            <h2>Comer vegetal también es disfrutar</h2>
+
+            <p>
+                En V-Kombu queremos inspirarte a descubrir nuevos
+                ingredientes, probar combinaciones y disfrutar
+                de la cocina vegetariana a tu manera.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="pie-pagina">
+
+        <div class="pie-contenido">
+
+            <div>
+                <a href="#" class="logo">V-Kombu</a>
+
+                <p>
+                    Un espacio para descubrir y disfrutar
+                    la cocina vegetal.
+                </p>
+            </div>
+
+            <div class="enlaces-pie">
+
+                <a href="#recetas">Recetas</a>
+                <a href="#categorias">Categorías</a>
+                <a href="#nosotros">Sobre nosotros</a>
+
+            </div>
+
+        </div>
+
+        <p class="copyright">
+            © 2026 V-Kombu. Proyecto académico.
+        </p>
+
+    </footer>
+
+
+    <!-- CONEXIÓN CON JAVASCRIPT -->
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

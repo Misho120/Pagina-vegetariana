@@ -1,0 +1,975 @@
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Conoce V-Kombu, un espacio para descubrir y disfrutar la cocina vegetariana.">
+
+    <title>V-Kombu | Cocina vegetal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --verde: #244b35;
+            --verde-claro: #b6d7a8;
+            --blanco: #ffffff;
+            --texto: #304438;
+            --crema: #f8f8f1;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            color: var(--texto);
+            background: #203c2c;
+        }
+
+        button,
+        a {
+            font: inherit;
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid #b6d7a8;
+            outline-offset: 5px;
+        }
+
+        .presentacion {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100svh;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        /* FONDO FOTOGRÁFICO */
+
+        .fondo {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background-image:
+                url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2400&q=85");
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.03);
+        }
+
+        .fondo::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(12, 34, 23, 0.76),
+                    rgba(16, 39, 26, 0.43) 55%,
+                    rgba(12, 32, 22, 0.58)
+                ),
+                linear-gradient(
+                    0deg,
+                    rgba(9, 25, 17, 0.38),
+                    transparent 35%,
+                    rgba(9, 25, 17, 0.22)
+                );
+        }
+
+        .barra-superior {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            width: 100%;
+            padding: 27px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            color: var(--blanco);
+            text-decoration: none;
+            font-family: "Playfair Display", serif;
+            font-size: clamp(1.7rem, 3vw, 2.25rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo span {
+            color: #b6d7a8;
+        }
+
+        .etiqueta-superior {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+        }
+
+        /* CARRUSEL */
+
+        .carrusel {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100svh;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+
+        .carrusel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .pantalla {
+            position: relative;
+            flex: 0 0 100%;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100svh;
+            padding: 115px 12% 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            scroll-snap-align: start;
+            overflow: hidden;
+        }
+
+        /* PAISAJES DIFERENTES POR SECCIÓN */
+
+        .pantalla::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 1.2s ease;
+        }
+
+        .pantalla:hover::before {
+            transform: scale(1.035);
+        }
+
+        .pantalla-inicio::before {
+            background-image: url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2200&q=85");
+        }
+
+        .pantalla-mision::before {
+            background-image: url("https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=2200&q=85");
+        }
+
+        .pantalla-vision::before {
+            background-image: url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2200&q=85");
+        }
+
+        .pantalla-valores::before {
+            background-image: url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2200&q=85");
+        }
+
+        .pantalla::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(
+                90deg,
+                rgba(13, 36, 23, 0.53),
+                rgba(13, 36, 23, 0.17),
+                rgba(13, 36, 23, 0.42)
+            );
+            pointer-events: none;
+        }
+
+        /* CARDS PRINCIPALES */
+
+        .contenido {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 880px;
+            margin: auto;
+            padding: clamp(28px, 5vw, 58px);
+            color: var(--blanco);
+            background: rgba(17, 42, 28, 0.60);
+            border: 1px solid rgba(255, 255, 255, 0.27);
+            border-radius: 28px;
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.24),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            animation: aparecer 0.75s ease both;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .numero {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            color: #c9e7b9;
+            font-size: 0.73rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+        }
+
+        .numero::before {
+            content: "";
+            width: 30px;
+            height: 1px;
+            background: #c9e7b9;
+        }
+
+        .pantalla h1,
+        .pantalla h2 {
+            margin: 0 0 23px;
+            color: var(--blanco);
+            font-family: "Playfair Display", serif;
+            font-size: clamp(2.7rem, 7vw, 5.8rem);
+            font-weight: 600;
+            line-height: 1.08;
+            letter-spacing: -1.8px;
+            text-wrap: balance;
+        }
+
+        .pantalla h1 {
+            font-size: clamp(4rem, 10vw, 8rem);
+            letter-spacing: -4px;
+        }
+
+        .pantalla h1::after {
+            content: ".";
+            color: #b6d7a8;
+        }
+
+        .pantalla h2 {
+            font-size: clamp(2.5rem, 6vw, 4.7rem);
+        }
+
+        .pregunta {
+            margin: 0 0 15px;
+            color: #d2e9c7;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .descripcion {
+            max-width: 690px;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.91);
+            font-size: clamp(1rem, 1.8vw, 1.14rem);
+            line-height: 1.9;
+        }
+
+        /* CARDS DE VALORES */
+
+        .lista-valores {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .valor {
+            padding: 19px;
+            background: rgba(255, 255, 255, 0.11);
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            border-radius: 17px;
+            transition:
+                background 0.25s ease,
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .valor:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(214, 239, 202, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .valor h3 {
+            margin: 0 0 8px;
+            color: #d3edc6;
+            font-family: "Playfair Display", serif;
+            font-size: 1.25rem;
+        }
+
+        .valor p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.86);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        /* BOTÓN CONTINUAR */
+
+        .boton-acceso {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 28px;
+            padding: 15px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 100px;
+            background: #d3e8c7;
+            color: #23432e;
+            text-decoration: none;
+            font-weight: 800;
+            cursor: pointer;
+            transition:
+                background 0.25s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .boton-acceso:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .boton-acceso span {
+            font-size: 1.2rem;
+            transition: transform 0.25s ease;
+        }
+
+        .boton-acceso:hover span {
+            transform: translateX(4px);
+        }
+
+        /* TEXTO INFERIOR */
+
+        .pista {
+            position: absolute;
+            bottom: 32px;
+            left: 7%;
+            z-index: 5;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+        }
+
+        /* FLECHAS LATERALES */
+
+        .controles {
+            position: absolute;
+            inset: 0;
+            z-index: 8;
+            pointer-events: none;
+        }
+
+        .flecha {
+            position: absolute;
+            top: 50%;
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            overflow: visible;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--blanco);
+            font-size: 1.65rem;
+            cursor: pointer;
+            pointer-events: auto;
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            transform: translateY(-50%);
+            transition:
+                background 0.25s ease,
+                border-color 0.25s ease,
+                opacity 0.25s ease;
+        }
+
+        #anterior {
+            left: 3%;
+        }
+
+        #siguiente {
+            right: 3%;
+        }
+
+        /* ONDAS CIRCULARES AL PASAR EL CURSOR */
+
+        .flecha::before,
+        .flecha::after {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border: 1px solid rgba(220, 245, 209, 0.9);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .flecha:hover:not(:disabled) {
+            background: rgba(185, 220, 166, 0.28);
+            border-color: #d3edc6;
+        }
+
+        .flecha:hover:not(:disabled)::before {
+            animation: onda 1.5s ease-out infinite;
+        }
+
+        .flecha:hover:not(:disabled)::after {
+            animation: onda 1.5s ease-out 0.5s infinite;
+        }
+
+        @keyframes onda {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(2.1);
+                opacity: 0;
+            }
+        }
+
+        .flecha:disabled {
+            opacity: 0.28;
+            cursor: not-allowed;
+        }
+
+        /* INDICADORES INFERIORES */
+
+        .progreso {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: auto;
+            transform: translateX(-50%);
+        }
+
+        .punto {
+            width: 9px;
+            height: 9px;
+            padding: 0;
+            border: 0;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.48);
+            cursor: pointer;
+            transition:
+                width 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .punto:hover {
+            background: #ffffff;
+        }
+
+        .punto.activo {
+            width: 30px;
+            background: #d3edc6;
+        }
+
+        /* ADAPTACIÓN A CELULARES */
+
+        @media (max-width: 700px) {
+            .barra-superior {
+                padding: 22px 6%;
+            }
+
+            .etiqueta-superior {
+                max-width: 145px;
+                font-size: 0.59rem;
+                line-height: 1.6;
+                text-align: right;
+                letter-spacing: 1.3px;
+            }
+
+            .pantalla {
+                padding: 105px 8% 120px;
+            }
+
+            .contenido {
+                padding: 28px 23px;
+                border-radius: 22px;
+            }
+
+            .pantalla h1 {
+                font-size: clamp(3.5rem, 14vw, 5.5rem);
+                letter-spacing: -2px;
+            }
+
+            .pantalla h2 {
+                font-size: clamp(2.3rem, 9vw, 3.5rem);
+                letter-spacing: -1px;
+            }
+
+            .numero {
+                font-size: 0.64rem;
+                letter-spacing: 1.5px;
+            }
+
+            .descripcion {
+                font-size: 0.96rem;
+                line-height: 1.8;
+            }
+
+            .lista-valores {
+                gap: 9px;
+                margin-top: 20px;
+            }
+
+            .valor {
+                padding: 13px;
+                border-radius: 13px;
+            }
+
+            .valor h3 {
+                font-size: 1.05rem;
+            }
+
+            .valor p {
+                font-size: 0.79rem;
+                line-height: 1.6;
+            }
+
+            .boton-acceso {
+                margin-top: 21px;
+            }
+
+            .flecha {
+                top: auto;
+                bottom: 20px;
+                width: 43px;
+                height: 43px;
+                font-size: 1.25rem;
+                transform: none;
+            }
+
+            #anterior {
+                left: 6%;
+            }
+
+            #siguiente {
+                right: 6%;
+            }
+
+            .progreso {
+                bottom: 37px;
+                gap: 7px;
+            }
+
+            .punto {
+                width: 7px;
+                height: 7px;
+            }
+
+            .punto.activo {
+                width: 22px;
+            }
+
+            .pista {
+                bottom: 78px;
+                left: 8%;
+                max-width: 125px;
+                font-size: 0.72rem;
+                line-height: 1.5;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .pantalla {
+                padding-right: 7%;
+                padding-left: 7%;
+            }
+
+            .contenido {
+                padding: 23px 18px;
+            }
+
+            .lista-valores {
+                gap: 7px;
+            }
+
+            .valor {
+                padding: 10px;
+            }
+
+            .valor p {
+                font-size: 0.74rem;
+            }
+
+            .pista {
+                max-width: 105px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="presentacion">
+
+        <div class="fondo" aria-hidden="true"></div>
+
+        <header class="barra-superior">
+            <a class="logo" href="#inicio" aria-label="V-Kombu, inicio">
+                V-Kombu<span>.</span>
+            </a>
+
+            <span class="etiqueta-superior">
+                COCINA VEGETAL PARA TODOS
+            </span>
+        </header>
+
+        <div class="carrusel" id="carrusel">
+
+            <!-- PANTALLA 1: BIENVENIDA -->
+            <section
+                class="pantalla pantalla-inicio"
+                id="inicio"
+                aria-labelledby="titulo-inicio">
+
+                <div class="contenido">
+                    <span class="numero">BIENVENIDA</span>
+
+                    <h1 id="titulo-inicio">V-Kombu</h1>
+
+                    <p class="pregunta">¿Qué es?</p>
+
+                    <p class="descripcion">
+                        Un espacio para descubrir la cocina vegetariana,
+                        explorar ingredientes naturales y encontrar
+                        inspiración para cocinar. Creemos que comer
+                        vegetal puede ser sencillo, creativo y delicioso
+                        para cualquier persona.
+                    </p>
+                </div>
+            </section>
+
+            <!-- PANTALLA 2: MISIÓN -->
+            <section
+                class="pantalla pantalla-mision"
+                id="mision"
+                aria-labelledby="titulo-mision">
+
+                <div class="contenido">
+                    <span class="numero">NUESTRO PROPÓSITO</span>
+
+                    <h2 id="titulo-mision">Nuestra misión</h2>
+
+                    <p class="descripcion">
+                        Acercar la cocina vegetariana a todas las
+                        personas mediante un recetario accesible,
+                        ideas prácticas e inspiración para experimentar
+                        con nuevos ingredientes y sabores.
+                    </p>
+                </div>
+            </section>
+
+            <!-- PANTALLA 3: VISIÓN -->
+            <section
+                class="pantalla pantalla-vision"
+                id="vision"
+                aria-labelledby="titulo-vision">
+
+                <div class="contenido">
+                    <span class="numero">HACIA DÓNDE VAMOS</span>
+
+                    <h2 id="titulo-vision">Nuestra visión</h2>
+
+                    <p class="descripcion">
+                        Convertirnos en un espacio digital de referencia
+                        para descubrir, aprender y disfrutar la cocina
+                        vegetariana, donde cada persona pueda encontrar
+                        nuevas posibilidades para su alimentación.
+                    </p>
+                </div>
+            </section>
+
+            <!-- PANTALLA 4: VALORES -->
+            <section
+                class="pantalla pantalla-valores"
+                id="valores"
+                aria-labelledby="titulo-valores">
+
+                <div class="contenido">
+                    <span class="numero">LO QUE NOS DEFINE</span>
+
+                    <h2 id="titulo-valores">Nuestros valores</h2>
+
+                    <p class="descripcion">
+                        La esencia de V-Kombu está en disfrutar el
+                        proceso, respetar la diversidad de gustos
+                        y descubrir nuevas formas de cocinar.
+                    </p>
+
+                    <div class="lista-valores">
+
+                        <article class="valor">
+                            <h3>Naturalidad</h3>
+                            <p>
+                                Inspiración en los ingredientes
+                                vegetales y sus posibilidades.
+                            </p>
+                        </article>
+
+                        <article class="valor">
+                            <h3>Inclusión</h3>
+                            <p>
+                                Recetas e ideas para personas
+                                con gustos y experiencias diferentes.
+                            </p>
+                        </article>
+
+                        <article class="valor">
+                            <h3>Creatividad</h3>
+                            <p>
+                                Libertad para experimentar y
+                                descubrir nuevas combinaciones.
+                            </p>
+                        </article>
+
+                        <article class="valor">
+                            <h3>Disfrute</h3>
+                            <p>
+                                Cocinar como una oportunidad
+                                para aprender y disfrutar.
+                            </p>
+                        </article>
+
+                    </div>
+
+                    <button
+                        class="boton-acceso"
+                        id="ir-acceso"
+                        type="button">
+                        Continuar
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+            </section>
+
+        </div>
+
+        <p class="pista" id="pista" aria-live="polite">
+            Descubre nuestra esencia
+        </p>
+
+        <nav class="controles" aria-label="Navegación de presentación">
+
+            <button
+                class="flecha"
+                id="anterior"
+                type="button"
+                aria-label="Pantalla anterior"
+                disabled>
+                <span aria-hidden="true">←</span>
+            </button>
+
+            <button
+                class="flecha"
+                id="siguiente"
+                type="button"
+                aria-label="Pantalla siguiente">
+                <span aria-hidden="true">→</span>
+            </button>
+
+            <div class="progreso" aria-label="Seleccionar pantalla">
+
+                <button
+                    class="punto activo"
+                    type="button"
+                    data-indice="0"
+                    aria-label="Ir a ¿Qué es V-Kombu?"
+                    aria-current="step"></button>
+
+                <button
+                    class="punto"
+                    type="button"
+                    data-indice="1"
+                    aria-label="Ir a nuestra misión"></button>
+
+                <button
+                    class="punto"
+                    type="button"
+                    data-indice="2"
+                    aria-label="Ir a nuestra visión"></button>
+
+                <button
+                    class="punto"
+                    type="button"
+                    data-indice="3"
+                    aria-label="Ir a nuestros valores"></button>
+
+            </div>
+        </nav>
+
+    </main>
+
+    <script>
+        const carrusel = document.getElementById("carrusel");
+
+        const pantallas = Array.from(
+            carrusel.querySelectorAll(".pantalla")
+        );
+
+        const botonAnterior = document.getElementById("anterior");
+        const botonSiguiente = document.getElementById("siguiente");
+
+        const puntos = Array.from(
+            document.querySelectorAll(".punto")
+        );
+
+        const pista = document.getElementById("pista");
+        const botonAcceso = document.getElementById("ir-acceso");
+
+        const mensajes = [
+            "Descubre nuestra esencia",
+            "Conoce nuestro propósito",
+            "Imagina lo que podemos lograr",
+            "Nuestros principios, tu inspiración"
+        ];
+
+        let indiceActual = 0;
+        let desplazamientoProgramado = false;
+
+        function mostrarPantalla(indice) {
+            indiceActual = Math.max(
+                0,
+                Math.min(indice, pantallas.length - 1)
+            );
+
+            desplazamientoProgramado = true;
+
+            pantallas[indiceActual].scrollIntoView({
+                behavior: window.matchMedia(
+                    "(prefers-reduced-motion: reduce)"
+                ).matches ? "auto" : "smooth",
+                block: "nearest",
+                inline: "start"
+            });
+
+            actualizarControles();
+
+            window.setTimeout(() => {
+                desplazamientoProgramado = false;
+            }, 500);
+        }
+
+        function actualizarControles() {
+            botonAnterior.disabled = indiceActual === 0;
+
+            botonSiguiente.disabled =
+                indiceActual === pantallas.length - 1;
+
+            puntos.forEach((punto, indice) => {
+                const activo = indice === indiceActual;
+
+                punto.classList.toggle("activo", activo);
+
+                if (activo) {
+                    punto.setAttribute("aria-current", "step");
+                } else {
+                    punto.removeAttribute("aria-current");
+                }
+            });
+
+            pista.textContent = mensajes[indiceActual];
+        }
+
+        botonAnterior.addEventListener("click", () => {
+            mostrarPantalla(indiceActual - 1);
+        });
+
+        botonSiguiente.addEventListener("click", () => {
+            mostrarPantalla(indiceActual + 1);
+        });
+
+        puntos.forEach((punto) => {
+            punto.addEventListener("click", () => {
+                mostrarPantalla(Number(punto.dataset.indice));
+            });
+        });
+
+        botonAcceso.addEventListener("click", () => {
+            window.location.href = "acceso.html";
+        });
+
+        carrusel.addEventListener("scroll", () => {
+            if (desplazamientoProgramado) {
+                return;
+            }
+
+            const ancho = carrusel.clientWidth;
+
+            if (ancho === 0) {
+                return;
+            }
+
+            const nuevoIndice = Math.round(
+                carrusel.scrollLeft / ancho
+            );
+
+            if (
+                nuevoIndice !== indiceActual &&
+                nuevoIndice >= 0 &&
+                nuevoIndice < pantallas.length
+            ) {
+                indiceActual = nuevoIndice;
+                actualizarControles();
+            }
+        }, { passive: true });
+
+        actualizarControles();
+    </script>
+
+</body>
+</html>
+```
