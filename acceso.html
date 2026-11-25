@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Inicia sesión en V-Kombu para explorar el recetario vegetal.">
+    <title>V-Kombu | Acceso</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --verde-oscuro: #112a1c;
+            --verde-claro: #b6d7a8;
+            --menta-suave: #d3e8c7;
+            --blanco: #ffffff;
+            --texto-claro: rgba(255, 255, 255, 0.92);
+            --texto-tenue: rgba(255, 255, 255, 0.75);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100dvh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            color: var(--blanco);
+            background: #203c2c;
+        }
+
+        button,
+        input,
+        a {
+            font: inherit;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--verde-claro);
+            outline-offset: 3px;
+        }
+
+        .acceso-pantalla {
+            position: relative;
+            width: 100%;
+            height: 100dvh;
+            padding: 72px 6% 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .fondo-acceso {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background-image: url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2200&q=85");
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.03);
+        }
+
+        .fondo-acceso::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(11, 31, 20, 0.78),
+                rgba(17, 42, 28, 0.58) 55%,
+                rgba(9, 25, 17, 0.72)
+            );
+        }
+
+        .barra-superior {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            width: 100%;
+            padding: 18px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .logo {
+            color: var(--blanco);
+            text-decoration: none;
+            font-family: "Playfair Display", serif;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .logo span {
+            color: var(--verde-claro);
+        }
+
+        .volver-inicio {
+            color: var(--texto-claro);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 999px;
+            background: rgba(17, 42, 28, 0.45);
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .volver-inicio:hover {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: var(--verde-claro);
+        }
+
+        .tarjeta-acceso {
+            width: 100%;
+            max-width: 440px;
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: none;
+            padding: 22px 28px;
+            background: rgba(17, 42, 28, 0.68);
+            border: 1px solid rgba(255, 255, 255, 0.26);
+            border-radius: 24px;
+            box-shadow:
+                0 24px 70px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+        }
+
+        .tarjeta-acceso::-webkit-scrollbar {
+            display: none;
+        }
+
+        .subtitulo-acceso {
+            margin: 0 0 6px;
+            color: var(--verde-claro);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2.2px;
+            text-transform: uppercase;
+        }
+
+        .tarjeta-acceso h1 {
+            margin: 0 0 6px;
+            font-family: "Playfair Display", serif;
+            font-size: clamp(1.8rem, 3.6vw, 2.35rem);
+            font-weight: 700;
+            line-height: 1.15;
+        }
+
+        .descripcion-acceso {
+            margin: 0 0 16px;
+            color: var(--texto-tenue);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .grupo-campo {
+            margin-bottom: 12px;
+        }
+
+        .grupo-campo label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--texto-claro);
+            font-size: 0.83rem;
+            font-weight: 600;
+        }
+
+        .grupo-campo input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--blanco);
+            font-size: 0.92rem;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .grupo-campo input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .grupo-campo input:focus {
+            outline: none;
+            border-color: var(--verde-claro);
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .mensaje-error {
+            min-height: 18px;
+            margin: 4px 0 10px;
+            color: #ffd29d;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .boton-entrar {
+            width: 100%;
+            padding: 12px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 999px;
+            background: var(--menta-suave);
+            color: #1e3b29;
+            font-size: 0.94rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .boton-entrar:hover {
+            background: var(--blanco);
+            transform: translateY(-1px);
+        }
+
+        .acciones-extra {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .boton-invitado {
+            border: none;
+            background: transparent;
+            color: var(--verde-claro);
+            font-size: 0.84rem;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+
+        .boton-invitado:hover {
+            color: var(--blanco);
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="acceso-pantalla">
+
+        <div class="fondo-acceso" aria-hidden="true"></div>
+
+        <header class="barra-superior">
+            <a href="index.html" class="logo" aria-label="V-Kombu, volver a presentación">
+                V-Kombu<span>.</span>
+            </a>
+            <a href="index.html" class="volver-inicio">
+                ← Presentación
+            </a>
+        </header>
+
+        <section class="tarjeta-acceso" aria-labelledby="titulo-acceso">
+
+            <p class="subtitulo-acceso">Bienvenido de vuelta</p>
+            <h1 id="titulo-acceso">Iniciar sesión</h1>
+            <p class="descripcion-acceso">
+                Ingresa tus datos para acceder al recetario vegetal de V-Kombu.
+            </p>
+
+            <form id="formulario-acceso" novalidate>
+
+                <div class="grupo-campo">
+                    <label for="nombre-usuario">Tu nombre</label>
+                    <input
+                        type="text"
+                        id="nombre-usuario"
+                        name="nombre"
+                        placeholder="ej. Paola"
+                        autocomplete="name"
+                    >
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="usuario-correo">Correo electrónico</label>
+                    <input
+                        type="email"
+                        id="usuario-correo"
+                        name="correo"
+                        placeholder="ej. cocina@vkombu.mx"
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="contrasena">Contraseña</label>
+                    <input
+                        type="password"
+                        id="contrasena"
+                        name="contrasena"
+                        placeholder="••••••••"
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <p class="mensaje-error" id="mensaje-error" role="alert" aria-live="polite"></p>
+
+                <button type="submit" class="boton-entrar">
+                    Entrar al recetario
+                </button>
+
+            </form>
+
+            <div class="acciones-extra">
+                <button type="button" class="boton-invitado" id="entrar-rapido">
+                    Entrar como invitado
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        const formularioAcceso = document.getElementById("formulario-acceso");
+        const campoNombre = document.getElementById("nombre-usuario");
+        const campoCorreo = document.getElementById("usuario-correo");
+        const campoContrasena = document.getElementById("contrasena");
+        const mensajeError = document.getElementById("mensaje-error");
+        const botonInvitado = document.getElementById("entrar-rapido");
+
+        function irARecetario(nombreMostrar) {
+            sessionStorage.setItem("vkombu_usuario", nombreMostrar);
+            window.location.href = "recetario.html";
+        }
+
+        formularioAcceso.addEventListener("submit", (evento) => {
+            evento.preventDefault();
+
+            const nombre = campoNombre.value.trim();
+            const correo = campoCorreo.value.trim();
+            const contrasena = campoContrasena.value.trim();
+
+            if (!nombre || !correo || !contrasena) {
+                mensajeError.textContent = "Completa tu nombre, correo y contraseña para continuar.";
+                return;
+            }
+
+            mensajeError.textContent = "";
+            irARecetario(nombre);
+        });
+
+        botonInvitado.addEventListener("click", () => {
+            mensajeError.textContent = "";
+            irARecetario("Invitado");
+        });
+    </script>
+
+</body>
+</html>

@@ -4,509 +4,1031 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="description"
-        content="Descubre recetas vegetarianas, explora ingredientes y encuentra inspiración para cocinar de forma saludable.">
+        content="Conoce V-Kombu, un espacio para descubrir y disfrutar la cocina vegetariana.">
 
-    <title>V-Kombu | Recetario Vegetal</title>
+    <title>V-Kombu | Cocina vegetal</title>
 
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --verde: #244b35;
+            --verde-claro: #b6d7a8;
+            --blanco: #ffffff;
+            --texto: #304438;
+            --crema: #f8f8f1;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100dvh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            color: var(--texto);
+            background: #203c2c;
+        }
+
+        button,
+        a {
+            font: inherit;
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid #b6d7a8;
+            outline-offset: 4px;
+        }
+
+        .presentacion {
+            position: relative;
+            width: 100%;
+            height: 100dvh;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        /* FONDO FOTOGRÁFICO */
+
+        .fondo {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background-image:
+                url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2400&q=85");
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.03);
+        }
+
+        .fondo::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(12, 34, 23, 0.76),
+                    rgba(16, 39, 26, 0.43) 55%,
+                    rgba(12, 32, 22, 0.58)
+                ),
+                linear-gradient(
+                    0deg,
+                    rgba(9, 25, 17, 0.38),
+                    transparent 35%,
+                    rgba(9, 25, 17, 0.22)
+                );
+        }
+
+        .barra-superior {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            width: 100%;
+            padding: 20px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            color: var(--blanco);
+            text-decoration: none;
+            font-family: "Playfair Display", serif;
+            font-size: clamp(1.55rem, 2.6vw, 2.1rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo span {
+            color: #b6d7a8;
+        }
+
+        .etiqueta-superior {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+        }
+
+        /* CARRUSEL */
+
+        .carrusel {
+            display: flex;
+            width: 100%;
+            height: 100dvh;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+
+        .carrusel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .pantalla {
+            position: relative;
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100dvh;
+            padding: 76px 11% 74px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            scroll-snap-align: start;
+            overflow: hidden;
+        }
+
+        /* PAISAJES DIFERENTES POR SECCIÓN */
+
+        .pantalla::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 1.2s ease;
+        }
+
+        .pantalla:hover::before {
+            transform: scale(1.035);
+        }
+
+        .pantalla-inicio::before {
+            background-image: url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2200&q=85");
+        }
+
+        .pantalla-mision::before {
+            background-image: url("https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=2200&q=85");
+        }
+
+        .pantalla-vision::before {
+            background-image: url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2200&q=85");
+        }
+
+        .pantalla-valores::before {
+            background-image: url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2200&q=85");
+        }
+
+        .pantalla::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(
+                90deg,
+                rgba(13, 36, 23, 0.53),
+                rgba(13, 36, 23, 0.17),
+                rgba(13, 36, 23, 0.42)
+            );
+            pointer-events: none;
+        }
+
+        /* CARDS PRINCIPALES */
+
+        .contenido {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 860px;
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: none;
+            margin: auto;
+            padding: clamp(22px, 3.4vw, 40px) clamp(26px, 4.2vw, 48px);
+            color: var(--blanco);
+            background: rgba(17, 42, 28, 0.62);
+            border: 1px solid rgba(255, 255, 255, 0.27);
+            border-radius: 24px;
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.24),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            animation: aparecer 0.75s ease both;
+        }
+
+        .contenido::-webkit-scrollbar {
+            display: none;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .numero {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            color: #c9e7b9;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+        }
+
+        .numero::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: #c9e7b9;
+        }
+
+        .pantalla h1,
+        .pantalla h2 {
+            margin: 0 0 14px;
+            color: var(--blanco);
+            font-family: "Playfair Display", serif;
+            font-weight: 600;
+            line-height: 1.06;
+            letter-spacing: -1.5px;
+            text-wrap: balance;
+        }
+
+        .pantalla h1 {
+            font-size: clamp(3.2rem, 7.5vw, 5.8rem);
+            letter-spacing: -3px;
+        }
+
+        .pantalla h1::after {
+            content: ".";
+            color: #b6d7a8;
+        }
+
+        .pantalla h2 {
+            font-size: clamp(2.1rem, 4.8vw, 3.6rem);
+        }
+
+        .pregunta {
+            margin: 0 0 10px;
+            color: #d2e9c7;
+            font-size: 1.08rem;
+            font-weight: 700;
+        }
+
+        .descripcion {
+            max-width: 690px;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.91);
+            font-size: clamp(0.95rem, 1.45vw, 1.05rem);
+            line-height: 1.65;
+        }
+
+        /* CARDS DE VALORES */
+
+        .lista-valores {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 11px;
+            margin-top: 18px;
+        }
+
+        .valor {
+            padding: 13px 16px;
+            background: rgba(255, 255, 255, 0.11);
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            border-radius: 15px;
+            transition:
+                background 0.25s ease,
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .valor:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(214, 239, 202, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .valor h3 {
+            margin: 0 0 4px;
+            color: #d3edc6;
+            font-family: "Playfair Display", serif;
+            font-size: 1.12rem;
+        }
+
+        .valor p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.86);
+            font-size: 0.86rem;
+            line-height: 1.48;
+        }
+
+        /* BOTÓN CONTINUAR */
+
+        .boton-acceso {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+            padding: 12px 22px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 100px;
+            background: #d3e8c7;
+            color: #23432e;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition:
+                background 0.25s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .boton-acceso:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .boton-acceso svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+
+        .boton-acceso:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* TEXTO INFERIOR */
+
+        .pista {
+            position: absolute;
+            bottom: 22px;
+            left: 7%;
+            z-index: 5;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.78rem;
+            letter-spacing: 0.3px;
+        }
+
+        /* FLECHAS LATERALES */
+
+        .controles {
+            position: absolute;
+            inset: 0;
+            z-index: 8;
+            pointer-events: none;
+        }
+
+        .flecha {
+            position: absolute;
+            top: 50%;
+            width: 52px;
+            height: 52px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--blanco);
+            cursor: pointer;
+            pointer-events: auto;
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            transform: translateY(-50%);
+            transition:
+                background 0.25s ease,
+                border-color 0.25s ease,
+                opacity 0.25s ease;
+        }
+
+        .flecha svg {
+            width: 22px;
+            height: 22px;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        #anterior {
+            left: 3%;
+        }
+
+        #siguiente {
+            right: 3%;
+        }
+
+        /* ONDAS CIRCULARES AL PASAR EL CURSOR */
+
+        .flecha::before,
+        .flecha::after {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border: 1px solid rgba(220, 245, 209, 0.9);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .flecha:hover:not(:disabled) {
+            background: rgba(185, 220, 166, 0.28);
+            border-color: #d3edc6;
+        }
+
+        .flecha:hover:not(:disabled)::before {
+            animation: onda 1.5s ease-out infinite;
+        }
+
+        .flecha:hover:not(:disabled)::after {
+            animation: onda 1.5s ease-out 0.5s infinite;
+        }
+
+        @keyframes onda {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(2.1);
+                opacity: 0;
+            }
+        }
+
+        .flecha:disabled {
+            opacity: 0.28;
+            cursor: not-allowed;
+        }
+
+        /* INDICADORES INFERIORES */
+
+        .progreso {
+            position: absolute;
+            bottom: 26px;
+            left: 50%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: auto;
+            transform: translateX(-50%);
+        }
+
+        .punto {
+            width: 9px;
+            height: 9px;
+            padding: 0;
+            border: 0;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.48);
+            cursor: pointer;
+            transition:
+                width 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .punto:hover {
+            background: #ffffff;
+        }
+
+        .punto.activo {
+            width: 30px;
+            background: #d3edc6;
+        }
+
+        /* ADAPTACIÓN A CELULARES */
+
+        @media (max-width: 700px) {
+            .barra-superior {
+                padding: 16px 6%;
+            }
+
+            .etiqueta-superior {
+                max-width: 145px;
+                font-size: 0.58rem;
+                line-height: 1.4;
+                text-align: right;
+                letter-spacing: 1.3px;
+            }
+
+            .pantalla {
+                padding: 64px 7% 96px;
+            }
+
+            .contenido {
+                padding: 20px 18px;
+                border-radius: 20px;
+            }
+
+            .numero {
+                margin-bottom: 10px;
+                font-size: 0.64rem;
+                letter-spacing: 1.5px;
+            }
+
+            .pantalla h1 {
+                font-size: clamp(2.8rem, 12vw, 4.2rem);
+                letter-spacing: -2px;
+                margin-bottom: 10px;
+            }
+
+            .pantalla h2 {
+                font-size: clamp(1.9rem, 8vw, 2.8rem);
+                letter-spacing: -1px;
+                margin-bottom: 10px;
+            }
+
+            .pregunta {
+                font-size: 0.98rem;
+                margin-bottom: 6px;
+            }
+
+            .descripcion {
+                font-size: 0.88rem;
+                line-height: 1.55;
+            }
+
+            .lista-valores {
+                gap: 8px;
+                margin-top: 12px;
+            }
+
+            .valor {
+                padding: 10px 12px;
+                border-radius: 12px;
+            }
+
+            .valor h3 {
+                font-size: 0.98rem;
+                margin-bottom: 2px;
+            }
+
+            .valor p {
+                font-size: 0.76rem;
+                line-height: 1.4;
+            }
+
+            .boton-acceso {
+                margin-top: 14px;
+                padding: 10px 18px;
+                font-size: 0.88rem;
+            }
+
+            .flecha {
+                top: auto;
+                bottom: 16px;
+                width: 42px;
+                height: 42px;
+                transform: none;
+            }
+
+            .flecha svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            #anterior {
+                left: 6%;
+            }
+
+            #siguiente {
+                right: 6%;
+            }
+
+            .progreso {
+                bottom: 33px;
+                gap: 7px;
+            }
+
+            .punto {
+                width: 7px;
+                height: 7px;
+            }
+
+            .punto.activo {
+                width: 22px;
+            }
+
+            .pista {
+                bottom: 66px;
+                left: 7%;
+                max-width: 140px;
+                font-size: 0.7rem;
+                line-height: 1.35;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .pantalla {
+                padding-right: 6%;
+                padding-left: 6%;
+            }
+
+            .contenido {
+                padding: 16px 14px;
+            }
+
+            .lista-valores {
+                gap: 6px;
+            }
+
+            .valor {
+                padding: 8px 10px;
+            }
+
+            .valor p {
+                font-size: 0.72rem;
+            }
+
+            .pista {
+                max-width: 110px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- ENCABEZADO -->
-    <header class="encabezado">
+    <main class="presentacion">
 
-        <a href="#" class="logo" aria-label="V-Kombu, página principal">
-            V-Kombu
-        </a>
+        <div class="fondo" aria-hidden="true"></div>
 
-        <nav class="navegacion" aria-label="Navegación principal">
-            <a href="#recetas">Recetas</a>
-            <a href="#categorias">Categorías</a>
-            <a href="#nosotros">Sobre nosotros</a>
-        </nav>
+        <header class="barra-superior">
+            <a class="logo" id="logo-inicio" href="#inicio" aria-label="V-Kombu, inicio">
+                V-Kombu<span>.</span>
+            </a>
 
-        <a href="#recetas" class="boton-explorar">
-            Explorar recetas
-        </a>
+            <span class="etiqueta-superior">
+                COCINA VEGETAL PARA TODOS
+            </span>
+        </header>
 
-    </header>
+        <div class="carrusel" id="carrusel">
 
+            <!-- PANTALLA 1: BIENVENIDA -->
+            <section
+                class="pantalla pantalla-inicio"
+                id="inicio"
+                aria-labelledby="titulo-inicio">
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main>
+                <div class="contenido">
+                    <span class="numero">BIENVENIDA</span>
 
-        <!-- PRESENTACIÓN Y BUSCADOR -->
-        <section class="presentacion">
+                    <h1 id="titulo-inicio">V-Kombu</h1>
 
-            <p class="etiqueta">COCINA VEGETAL PARA TODOS</p>
+                    <p class="pregunta">¿Qué es?</p>
 
-            <h1>Explora el recetario</h1>
-
-            <p class="descripcion">
-                Encuentra inspiración para cocinar con ingredientes
-                vegetales, descubrir nuevos sabores y disfrutar cada comida.
-            </p>
-
-            <form class="buscador" id="formulario-busqueda" role="search">
-
-                <label for="buscar-receta" class="texto-oculto">
-                    Buscar recetas
-                </label>
-
-                <input
-                    type="search"
-                    id="buscar-receta"
-                    name="busqueda"
-                    placeholder="Busca por ingrediente, plato o técnica..."
-                >
-
-                <button type="submit">
-                    Buscar
-                </button>
-
-            </form>
-
-        </section>
-
-
-        <!-- CATEGORÍAS -->
-        <section class="categorias" id="categorias">
-
-            <div class="titulo-seccion">
-                <p class="etiqueta">ENCUENTRA TU INSPIRACIÓN</p>
-                <h2>¿Qué se te antoja hoy?</h2>
-            </div>
-
-            <div class="lista-categorias">
-
-                <button type="button" class="categoria" data-categoria="todas">
-                    Todas las recetas
-                </button>
-
-                <button type="button" class="categoria" data-categoria="desayuno">
-                    Desayunos
-                </button>
-
-                <button type="button" class="categoria" data-categoria="comida">
-                    Comidas
-                </button>
-
-                <button type="button" class="categoria" data-categoria="cena">
-                    Cenas
-                </button>
-
-                <button type="button" class="categoria" data-categoria="postre">
-                    Postres
-                </button>
-
-                <button type="button" class="categoria" data-categoria="bebida">
-                    Bebidas
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- RECETAS Y FILTROS -->
-        <section class="seccion-recetas" id="recetas">
-
-            <div class="encabezado-recetas">
-
-                <div>
-                    <p class="etiqueta">NUEVAS IDEAS PARA TU COCINA</p>
-                    <h2>Descubre nuestras recetas</h2>
+                    <p class="descripcion">
+                        Un espacio para descubrir la cocina vegetariana,
+                        explorar ingredientes naturales y encontrar
+                        inspiración para cocinar. Creemos que comer
+                        vegetal puede ser sencillo, creativo y delicioso
+                        para cualquier persona.
+                    </p>
                 </div>
-
-                <p id="contador-recetas" aria-live="polite">
-                    6 recetas
-                </p>
-
-            </div>
-
-
-            <div class="contenido-recetas">
-
-                <!-- PANEL DE FILTROS -->
-                <aside class="filtros" aria-label="Filtros de recetas">
-
-                    <h3>Filtrar recetas</h3>
-
-                    <!-- FILTRO POR TIEMPO -->
-                    <fieldset>
-
-                        <legend>Tiempo de preparación</legend>
-
-                        <label>
-                            <input type="radio" name="tiempo" value="todos" checked>
-                            Cualquier duración
-                        </label>
-
-                        <label>
-                            <input type="radio" name="tiempo" value="15">
-                            15 minutos o menos
-                        </label>
-
-                        <label>
-                            <input type="radio" name="tiempo" value="30">
-                            30 minutos o menos
-                        </label>
-
-                    </fieldset>
-
-
-                    <!-- FILTRO POR TIPO DE PLATO -->
-                    <fieldset>
-
-                        <legend>Tipo de plato</legend>
-
-                        <label>
-                            <input type="checkbox" name="tipo" value="desayuno">
-                            Desayuno
-                        </label>
-
-                        <label>
-                            <input type="checkbox" name="tipo" value="comida">
-                            Comida
-                        </label>
-
-                        <label>
-                            <input type="checkbox" name="tipo" value="cena">
-                            Cena
-                        </label>
-
-                        <label>
-                            <input type="checkbox" name="tipo" value="postre">
-                            Postre
-                        </label>
-
-                        <label>
-                            <input type="checkbox" name="tipo" value="bebida">
-                            Bebida
-                        </label>
-
-                    </fieldset>
-
-
-                    <!-- FILTRO POR ALIMENTACIÓN -->
-                    <fieldset>
-
-                        <legend>Preferencias alimentarias</legend>
-
-                        <label>
-                            <input type="checkbox" name="alimentacion" value="vegana">
-                            Vegana
-                        </label>
-
-                        <label>
-                            <input type="checkbox" name="alimentacion" value="vegetariana">
-                            Vegetariana
-                        </label>
-
-                    </fieldset>
-
-
-                    <button type="button" id="limpiar-filtros">
-                        Limpiar filtros
-                    </button>
-
-                </aside>
-
-
-                <!-- CUADRÍCULA DE RECETAS -->
-                <div class="cuadricula-recetas" id="lista-recetas">
-
-
-                    <!-- RECETA 1 -->
-                    <article
-                        class="tarjeta-receta"
-                        data-nombre="ensalada fresca de aguacate"
-                        data-ingredientes="aguacate lechuga tomate pepino limón"
-                        data-categoria="comida"
-                        data-tiempo="15"
-                        data-alimentacion="vegana vegetariana"
-                    >
-
-                        <img
-                            src="https://placehold.co/600x400/E5EBDD/31543D?text=Ensalada+fresca"
-                            alt="Imagen ilustrativa de una ensalada fresca de aguacate"
-                            loading="lazy"
-                        >
-
-                        <div class="informacion-receta">
-
-                            <span class="etiqueta-receta">VEGANA</span>
-
-                            <h3>Ensalada fresca de aguacate</h3>
-
-                            <p>
-                                Una combinación fresca de vegetales,
-                                aguacate y limón.
-                            </p>
-
-                            <div class="detalles-receta">
-                                <span>15 min</span>
-                                <span>Fácil</span>
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- RECETA 2 -->
-                    <article
-                        class="tarjeta-receta"
-                        data-nombre="tostadas de aguacate"
-                        data-ingredientes="pan aguacate tomate limón"
-                        data-categoria="desayuno"
-                        data-tiempo="10"
-                        data-alimentacion="vegana vegetariana"
-                    >
-
-                        <img
-                            src="https://placehold.co/600x400/F2E6CE/715538?text=Tostadas+de+aguacate"
-                            alt="Imagen ilustrativa de tostadas con aguacate"
-                            loading="lazy"
-                        >
-
-                        <div class="informacion-receta">
-
-                            <span class="etiqueta-receta">VEGANA</span>
-
-                            <h3>Tostadas de aguacate</h3>
-
-                            <p>
-                                Pan tostado acompañado de aguacate
-                                y vegetales frescos.
-                            </p>
-
-                            <div class="detalles-receta">
-                                <span>10 min</span>
-                                <span>Fácil</span>
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- RECETA 3 -->
-                    <article
-                        class="tarjeta-receta"
-                        data-nombre="pasta con tomate y albahaca"
-                        data-ingredientes="pasta tomate albahaca ajo aceite de oliva"
-                        data-categoria="comida"
-                        data-tiempo="25"
-                        data-alimentacion="vegana vegetariana"
-                    >
-
-                        <img
-                            src="https://placehold.co/600x400/F1DCD0/7B4938?text=Pasta+con+tomate"
-                            alt="Imagen ilustrativa de pasta con tomate y albahaca"
-                            loading="lazy"
-                        >
-
-                        <div class="informacion-receta">
-
-                            <span class="etiqueta-receta">VEGANA</span>
-
-                            <h3>Pasta con tomate y albahaca</h3>
-
-                            <p>
-                                Pasta acompañada de tomate,
-                                ajo y albahaca fresca.
-                            </p>
-
-                            <div class="detalles-receta">
-                                <span>25 min</span>
-                                <span>Fácil</span>
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- RECETA 4 -->
-                    <article
-                        class="tarjeta-receta"
-                        data-nombre="bowl de arroz y verduras"
-                        data-ingredientes="arroz zanahoria brócoli pepino ajonjolí"
-                        data-categoria="comida"
-                        data-tiempo="30"
-                        data-alimentacion="vegana vegetariana"
-                    >
-
-                        <img
-                            src="https://placehold.co/600x400/E3E8D5/496341?text=Bowl+de+verduras"
-                            alt="Imagen ilustrativa de un bowl de arroz con verduras"
-                            loading="lazy"
-                        >
-
-                        <div class="informacion-receta">
-
-                            <span class="etiqueta-receta">VEGANA</span>
-
-                            <h3>Bowl de arroz y verduras</h3>
-
-                            <p>
-                                Arroz acompañado de verduras
-                                frescas y una mezcla de sabores.
-                            </p>
-
-                            <div class="detalles-receta">
-                                <span>30 min</span>
-                                <span>Fácil</span>
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- RECETA 5 -->
-                    <article
-                        class="tarjeta-receta"
-                        data-nombre="hotcakes de plátano"
-                        data-ingredientes="plátano avena leche vegetal canela"
-                        data-categoria="desayuno"
-                        data-tiempo="15"
-                        data-alimentacion="vegana vegetariana"
-                    >
-
-                        <img
-                            src="https://placehold.co/600x400/F0E2C8/795A3B?text=Hotcakes+de+pl%C3%A1tano"
-                            alt="Imagen ilustrativa de hotcakes de plátano"
-                            loading="lazy"
-                        >
-
-                        <div class="informacion-receta">
-
-                            <span class="etiqueta-receta">VEGANA</span>
-
-                            <h3>Hotcakes de plátano</h3>
-
-                            <p>
-                                Una opción dulce para comenzar
-                                el día con energía.
-                            </p>
-
-                            <div class="detalles-receta">
-                                <span>15 min</span>
-                                <span>Fácil</span>
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- RECETA 6 -->
-                    <article
-                        class="tarjeta-receta"
-                        data-nombre="agua fresca de pepino y limón"
-                        data-ingredientes="pepino limón agua hierbabuena"
-                        data-categoria="bebida"
-                        data-tiempo="10"
-                        data-alimentacion="vegana vegetariana"
-                    >
-
-                        <img
-                            src="https://placehold.co/600x400/DCECE1/3F7255?text=Agua+de+pepino"
-                            alt="Imagen ilustrativa de agua fresca de pepino y limón"
-                            loading="lazy"
-                        >
-
-                        <div class="informacion-receta">
-
-                            <span class="etiqueta-receta">VEGANA</span>
-
-                            <h3>Agua de pepino y limón</h3>
-
-                            <p>
-                                Una bebida refrescante con pepino,
-                                limón y hierbabuena.
-                            </p>
-
-                            <div class="detalles-receta">
-                                <span>10 min</span>
-                                <span>Fácil</span>
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- MENSAJE CUANDO NO HAY RESULTADOS -->
-                    <p id="sin-resultados" hidden>
-                        No encontramos recetas con esos criterios.
-                        Prueba con otros filtros.
+            </section>
+
+            <!-- PANTALLA 2: MISIÓN -->
+            <section
+                class="pantalla pantalla-mision"
+                id="mision"
+                aria-labelledby="titulo-mision">
+
+                <div class="contenido">
+                    <span class="numero">NUESTRO PROPÓSITO</span>
+
+                    <h2 id="titulo-mision">Nuestra misión</h2>
+
+                    <p class="descripcion">
+                        Acercar la cocina vegetariana a todas las
+                        personas mediante un recetario accesible,
+                        ideas prácticas e inspiración para experimentar
+                        con nuevos ingredientes y sabores.
+                    </p>
+                </div>
+            </section>
+
+            <!-- PANTALLA 3: VISIÓN -->
+            <section
+                class="pantalla pantalla-vision"
+                id="vision"
+                aria-labelledby="titulo-vision">
+
+                <div class="contenido">
+                    <span class="numero">HACIA DÓNDE VAMOS</span>
+
+                    <h2 id="titulo-vision">Nuestra visión</h2>
+
+                    <p class="descripcion">
+                        Convertirnos en un espacio digital de referencia
+                        para descubrir, aprender y disfrutar la cocina
+                        vegetariana, donde cada persona pueda encontrar
+                        nuevas posibilidades para su alimentación.
+                    </p>
+                </div>
+            </section>
+
+            <!-- PANTALLA 4: VALORES -->
+            <section
+                class="pantalla pantalla-valores"
+                id="valores"
+                aria-labelledby="titulo-valores">
+
+                <div class="contenido">
+                    <span class="numero">LO QUE NOS DEFINE</span>
+
+                    <h2 id="titulo-valores">Nuestros valores</h2>
+
+                    <p class="descripcion">
+                        La esencia de V-Kombu está en disfrutar el
+                        proceso, respetar la diversidad de gustos
+                        y descubrir nuevas formas de cocinar.
                     </p>
 
+                    <div class="lista-valores">
+
+                        <article class="valor">
+                            <h3>Naturalidad</h3>
+                            <p>
+                                Inspiración en los ingredientes
+                                vegetales y sus posibilidades.
+                            </p>
+                        </article>
+
+                        <article class="valor">
+                            <h3>Inclusión</h3>
+                            <p>
+                                Recetas e ideas para personas
+                                con gustos y experiencias diferentes.
+                            </p>
+                        </article>
+
+                        <article class="valor">
+                            <h3>Creatividad</h3>
+                            <p>
+                                Libertad para experimentar y
+                                descubrir nuevas combinaciones.
+                            </p>
+                        </article>
+
+                        <article class="valor">
+                            <h3>Disfrute</h3>
+                            <p>
+                                Cocinar como una oportunidad
+                                para aprender y disfrutar.
+                            </p>
+                        </article>
+
+                    </div>
+
+                    <button
+                        class="boton-acceso"
+                        id="ir-acceso"
+                        type="button">
+                        Continuar
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
                 </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- SOBRE NOSOTROS -->
-        <section class="sobre-nosotros" id="nosotros">
-
-            <p class="etiqueta">NUESTRA FILOSOFÍA</p>
-
-            <h2>Comer vegetal también es disfrutar</h2>
-
-            <p>
-                En V-Kombu queremos inspirarte a descubrir nuevos
-                ingredientes, probar combinaciones y disfrutar
-                de la cocina vegetariana a tu manera.
-            </p>
-
-        </section>
-
-    </main>
-
-
-    <!-- PIE DE PÁGINA -->
-    <footer class="pie-pagina">
-
-        <div class="pie-contenido">
-
-            <div>
-                <a href="#" class="logo">V-Kombu</a>
-
-                <p>
-                    Un espacio para descubrir y disfrutar
-                    la cocina vegetal.
-                </p>
-            </div>
-
-            <div class="enlaces-pie">
-
-                <a href="#recetas">Recetas</a>
-                <a href="#categorias">Categorías</a>
-                <a href="#nosotros">Sobre nosotros</a>
-
-            </div>
+            </section>
 
         </div>
 
-        <p class="copyright">
-            © 2026 V-Kombu. Proyecto académico.
+        <p class="pista" id="pista" aria-live="polite">
+            Descubre nuestra esencia
         </p>
 
-    </footer>
+        <nav class="controles" aria-label="Navegación de presentación">
 
+            <button
+                class="flecha"
+                id="anterior"
+                type="button"
+                aria-label="Pantalla anterior"
+                disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </button>
 
-    <!-- CONEXIÓN CON JAVASCRIPT -->
-    <script src="js/app.js"></script>
+            <button
+                class="flecha"
+                id="siguiente"
+                type="button"
+                aria-label="Pantalla siguiente">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+
+            <div class="progreso" aria-label="Seleccionar pantalla">
+
+                <button
+                    class="punto activo"
+                    type="button"
+                    data-indice="0"
+                    aria-label="Ir a ¿Qué es V-Kombu?"
+                    aria-current="step"></button>
+
+                <button
+                    class="punto"
+                    type="button"
+                    data-indice="1"
+                    aria-label="Ir a nuestra misión"></button>
+
+                <button
+                    class="punto"
+                    type="button"
+                    data-indice="2"
+                    aria-label="Ir a nuestra visión"></button>
+
+                <button
+                    class="punto"
+                    type="button"
+                    data-indice="3"
+                    aria-label="Ir a nuestros valores"></button>
+
+            </div>
+        </nav>
+
+    </main>
+
+    <script>
+        const carrusel = document.getElementById("carrusel");
+
+        const pantallas = Array.from(
+            carrusel.querySelectorAll(".pantalla")
+        );
+
+        const botonAnterior = document.getElementById("anterior");
+        const botonSiguiente = document.getElementById("siguiente");
+        const logoInicio = document.getElementById("logo-inicio");
+
+        const puntos = Array.from(
+            document.querySelectorAll(".punto")
+        );
+
+        const pista = document.getElementById("pista");
+        const botonAcceso = document.getElementById("ir-acceso");
+
+        const mensajes = [
+            "Descubre nuestra esencia",
+            "Conoce nuestro propósito",
+            "Imagina lo que podemos lograr",
+            "Nuestros principios, tu inspiración"
+        ];
+
+        let indiceActual = 0;
+        let desplazamientoProgramado = false;
+
+        function mostrarPantalla(indice, instantaneo = false) {
+            indiceActual = Math.max(
+                0,
+                Math.min(indice, pantallas.length - 1)
+            );
+
+            desplazamientoProgramado = true;
+
+            const reducirMovimiento = window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+
+            pantallas[indiceActual].scrollIntoView({
+                behavior: instantaneo || reducirMovimiento ? "auto" : "smooth",
+                block: "nearest",
+                inline: "start"
+            });
+
+            actualizarControles();
+
+            window.setTimeout(() => {
+                desplazamientoProgramado = false;
+            }, 500);
+        }
+
+        function actualizarControles() {
+            botonAnterior.disabled = indiceActual === 0;
+
+            botonSiguiente.disabled =
+                indiceActual === pantallas.length - 1;
+
+            puntos.forEach((punto, indice) => {
+                const activo = indice === indiceActual;
+
+                punto.classList.toggle("activo", activo);
+
+                if (activo) {
+                    punto.setAttribute("aria-current", "step");
+                } else {
+                    punto.removeAttribute("aria-current");
+                }
+            });
+
+            pista.textContent = mensajes[indiceActual];
+        }
+
+        logoInicio.addEventListener("click", (evento) => {
+            evento.preventDefault();
+            mostrarPantalla(0);
+        });
+
+        botonAnterior.addEventListener("click", () => {
+            mostrarPantalla(indiceActual - 1);
+        });
+
+        botonSiguiente.addEventListener("click", () => {
+            mostrarPantalla(indiceActual + 1);
+        });
+
+        puntos.forEach((punto) => {
+            punto.addEventListener("click", () => {
+                mostrarPantalla(Number(punto.dataset.indice));
+            });
+        });
+
+        botonAcceso.addEventListener("click", () => {
+            window.location.href = "acceso.html";
+        });
+
+        document.addEventListener("keydown", (evento) => {
+            if (evento.key === "ArrowRight") {
+                mostrarPantalla(indiceActual + 1);
+            } else if (evento.key === "ArrowLeft") {
+                mostrarPantalla(indiceActual - 1);
+            }
+        });
+
+        window.addEventListener("resize", () => {
+            mostrarPantalla(indiceActual, true);
+        }, { passive: true });
+
+        carrusel.addEventListener("scroll", () => {
+            if (desplazamientoProgramado) {
+                return;
+            }
+
+            const ancho = carrusel.clientWidth;
+
+            if (ancho === 0) {
+                return;
+            }
+
+            const nuevoIndice = Math.round(
+                carrusel.scrollLeft / ancho
+            );
+
+            if (
+                nuevoIndice !== indiceActual &&
+                nuevoIndice >= 0 &&
+                nuevoIndice < pantallas.length
+            ) {
+                indiceActual = nuevoIndice;
+                actualizarControles();
+            }
+        }, { passive: true });
+
+        actualizarControles();
+    </script>
 
 </body>
-
 </html>
